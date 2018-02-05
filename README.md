@@ -19,4 +19,4 @@ We thus encode these items in the Game of Life objects as follows:
 - Input and output electrical pulses >> Gliders.
 - Wires >> Trajectories of glider movements.
 - Processing devices >> Collision of gliders.
-- Output device >> Collision of gliders with immobile patterns
+- Output device >> Collision of gliders with immobile patterns.
