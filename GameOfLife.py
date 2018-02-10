@@ -78,6 +78,7 @@ class CellGrid(Canvas):
 
     def handleMouseClick(self, event):
         '''updates in backend'''
+
         RandomPopulate.configure(state = DISABLED)
         row, column = self._eventCoords(event)
         cell = self.grid[row][column]
