@@ -1,6 +1,5 @@
 from tkinter import *
 from random import randint
-from time import sleep
 import tkinter.messagebox
 
 
@@ -13,7 +12,7 @@ gate = -1
 
 #############################################################################################
 
-class Cell():                    
+class Cell():
     '''Parameters for each cell on the board'''
     FILLED_COLOR_BG = "green"
     EMPTY_COLOR_BG = "white"
@@ -26,14 +25,14 @@ class Cell():
         self.ord = y
         self.size= size
         self.fill= False
-    
-        
+
+
     def _switch(self):
-        """ Switch if the cell is filled or not. """
+        ''' Switch if the cell is filled or not. '''
         self.fill = not self.fill
 
     def draw(self):
-        """ order to the cell to draw its representation on the canvas """
+        ''' order to the cell to draw its representation on the canvas '''
         if self.master != None :
             fill = Cell.FILLED_COLOR_BG
             outline = Cell.FILLED_COLOR_BORDER
@@ -50,7 +49,7 @@ class Cell():
             self.master.create_rectangle(xmin, ymin, xmax, ymax, fill = fill, outline = outline)
 
 
-class CellGrid(Canvas):                  
+class CellGrid(Canvas):
     '''Actual Board'''
     def __init__(self, master, rowNumber, columnNumber, cellSize, board):
         Canvas.__init__(self, master, width = cellSize * (columnNumber - 1), height = cellSize * (rowNumber - 1))
@@ -64,7 +63,7 @@ class CellGrid(Canvas):
 
         self.bind("<Button-1>", self.handleMouseClick)
         self.draw()
-        
+
     def draw(self):
         '''Toggles a pixel's color'''
         for row in self.grid:
@@ -88,14 +87,14 @@ class CellGrid(Canvas):
             board[row][column] = 1
         else:
             board[row][column] = 0
-       
+
 #############################################################################################
 
 #############################################################################################
 #functions
 def clear(board):
     '''Sets all cells to False'''
-    for i in range(0, board_height - 1):         
+    for i in range(0, board_height - 1):
         for j in range(0, board_width - 1):
             cell = grid.grid[i][j]
             if board[i][j] == 1:
@@ -103,10 +102,10 @@ def clear(board):
                 cell._switch()
                 cell.draw()
     RandomPopulate.configure(state = NORMAL)
-   
+
 def board_init(board):
     '''Allocates memory for the board'''
-    del board[:] 
+    del board[:]
     for i in range(0, (board_height + 1)):
         board.append([0] * (board_width + 1))
 
@@ -123,7 +122,7 @@ def add_org(board, x, y):
     board[x][y] = 1
 
 
-def populate(board, n):   
+def populate(board, n):
     '''Randomly selects n cells and adds an organism to those cells'''
     for q in range(0, n):
         flag = 0
@@ -134,7 +133,7 @@ def populate(board, n):
             if board[i][j] != 1:
                 add_org(board, i, j)
                 flag = 1
-                
+
     for i in range(0, board_height - 1):
         for j in range(0, board_width - 1):
             cell = grid.grid[i][j]
@@ -146,7 +145,7 @@ def copy_board(source, dest):
     '''Copies a board to another'''
     for i in range(0, board_height):
         for j in range(0, board_width):
-            dest[i][j] = source[i][j] 
+            dest[i][j] = source[i][j]
 
 
 def nbrs(board, x, y):
@@ -159,12 +158,12 @@ def nbrs(board, x, y):
                 no = no + 1
     if board[x][y] == 1:
         no = no - 1
-    return no         
+    return no
 
 def play(board):
     '''main driver function to intialise one step of the algorithm'''
     board_init(temp_board)
-    
+
     for i in range(0, board_height - 1):
         for j in range(0, board_width - 1):
             '''Checks each cell's number of neighbours and performs predefined rules, All the new cells are stored in a temp board'''
@@ -203,7 +202,7 @@ def SpawnGate(gate):
         spawnReverseGlider(board, 3, 90)
         spawnEaterAnd(board)
         update_gui_()
-        
+
         return
     if gate == 2:
         spawnGlider(board, 1, 0)
@@ -212,18 +211,18 @@ def SpawnGate(gate):
         spawnReverseGlider(board, 3, 120)
         spawnEaterOr(board)
         update_gui_()
-        
-        return 
+
+        return
     if gate == 3:
         spawnGlider(board, 1, 0)
         spawnReverseGlider(board, 3, 40)
         spawnEaterNot(board)
         update_gui_()
-        
-        return 
+
+        return
     tkinter.messagebox.showwarning("Undefined", "No gate selected")
     return -1
-        
+
 def update_board():
     '''updates board of the board ie. toggles cells to their respective and desired states'''
     play(board)
@@ -235,12 +234,12 @@ def update_board():
                 cell.draw()
             elif cell.fill == False and temp_board[i][j] == 1:
                 cell._switch()
-                cell.draw()   
+                cell.draw()
     copy_board(temp_board, board)
     board_init(temp_board)
 
 def fast_forward():
-    '''Forces program to exectute desired number of iterations of algorithm'''
+    '''Forces program to exectute desired number of iterations'''
     RandomPopulate.configure(state = DISABLED)
     for i in range(29):
         play(board)
@@ -248,7 +247,7 @@ def fast_forward():
         board_init(temp_board)
     play(board)
     copy_board(temp_board, board)
-        
+
     for i in range(0, board_height - 1):
         for j in range(0, board_width - 1):
             cell = grid.grid[i][j]
@@ -273,7 +272,7 @@ def update_gui_():
 
 #############################################################################################
                 '''Particular coordinates on the board to visualise a logic gate'''
-                
+
 def spawnGlider(board, x, y):
     toSpawn = [[5, 1],[6, 1],[6, 2],[5, 2],[5, 5],[4, 6],[5, 6],[6, 6],[3, 7],[7, 7],[5, 8],[2, 9],[2, 10],[3, 11],
                [4, 12],[5, 12],[6, 12],[7, 11],[8, 10],[8, 9],[7, 17],[7, 20],[7, 21],[7, 22],[6, 22],[5, 21],[6, 26],
@@ -289,7 +288,7 @@ def spawnReverseGlider(board, x, y):
                [1, 30], [3, 30], [0, 29], [4, 29], [2, 34], [2, 35], [3, 35], [3, 34]]
     for emt in toSpawn:
         add_org(board, int(x + emt[0]), int(y + emt[1]))
-   
+
 def spawnEaterAnd(board):
     toSpawn = [[56, 66], [57, 66], [57, 67], [57, 69], [57, 67], [55, 69], [55, 70],
                [56, 70], [55, 73], [56, 73], [56, 74], [55, 74], [59, 66], [59, 67], [60, 67], [60, 66], [57, 68]]
@@ -297,26 +296,24 @@ def spawnEaterAnd(board):
         add_org(board, int(emt[0]), int(emt[1]))
 
 def spawnEaterOr(board):
-    toSpawn = [[72, 82], [73, 82], [73, 83], [73, 84], [73, 85], [72, 86], [71, 86], [71, 85], [71, 89], 
+    toSpawn = [[72, 82], [73, 82], [73, 83], [73, 84], [73, 85], [72, 86], [71, 86], [71, 85], [71, 89],
                [72, 89], [72, 90], [71, 90], [75, 82], [75, 83], [76, 83], [76, 82]]
     for emt in toSpawn:
-        add_org(board, int(emt[0]), int(emt[1]))  
+        add_org(board, int(emt[0]), int(emt[1]))
 
 def spawnEaterNot(board):
-    toSpawn = [[32, 24], [32, 25], [33, 24], [33, 24], [33, 25], [32, 28], [32, 29], [33, 28], 
-                [34, 29], [34, 30], [34, 31], [34, 32], [33, 32], [36, 31], [36, 32], [37, 32], 
+    toSpawn = [[32, 24], [32, 25], [33, 24], [33, 24], [33, 25], [32, 28], [32, 29], [33, 28],
+                [34, 29], [34, 30], [34, 31], [34, 32], [33, 32], [36, 31], [36, 32], [37, 32],
                 [37, 31]]
     for emt in toSpawn:
         add_org(board, int(emt[0]), int(emt[1]))
 
 #############################################################################################
-        
+
 
 #############################################################################################
-        
-#############################################################################################
-        
-#PopupDialogs       
+
+#PopupDialogs
 class popup1:
     def __init__(self, parent):
         top = self.top = Toplevel(parent)
@@ -326,13 +323,13 @@ class popup1:
         self.EntryBox.pack()
         self.SubmitButton = Button(top, text='Submit', command=self.send)
         self.SubmitButton.pack()
-    
+
     def send(self):
         self.number = self.EntryBox.get()
         self.top.destroy()
 
 class popup2:
-    
+
     def __init__(self, parent):
 
         top = self.top = Toplevel(parent)
@@ -344,17 +341,17 @@ class popup2:
         self.Not = Button(top, text = 'NOT', command = lambda i=3: self.Return(i))
         self.Not.grid(row = 0, column = 2, padx = 5)
         self.top.protocol('WM_DELETE_WINDOW', self.doSomething)
-        
+
     def Return(self, i):
         self.gate = i
         self.top.destroy()
-    
+
     def doSomething(self):
         self.Return(4)
 
-#############################################################################################      
+#############################################################################################
 
- 
+
 gui = Tk()
 
 gui.title("Game Of Life")
@@ -367,7 +364,7 @@ frame.pack(side = BOTTOM)
 
 RandomPopulate = Button(frame, text = "Populate", command = inputPopup)
 RandomPopulate.grid(row = 0, column = 4, rowspan = 2, sticky = N + S, padx = (20, 0))
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       
+
 
 Logic = Button(frame, text = "Demonstrate Logic Gates", command = chooseGate)
 Logic.grid(row = 0, column = 5, rowspan = 2, sticky = N + S)
