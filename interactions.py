@@ -1,21 +1,22 @@
 from cell import Cell
 from cellgrid import CellGrid
-from tkinter import Tk, Frame, Button
+from tkinter import Tk, Frame, Button, Toplevel
 import tkinter.messagebox
 from random import randint
-from popups import popupInput
-import numpy as np
+from popups import popupInput, popupGate
+from spawners import *
 
-board_height = 10
-board_width = 10
+board_height = 80
+board_width = 80
 
 def populate():
-    x, y = randint(0, board_height - 2), randint(0, board_width - 2)
-    cell = grid.grid[x][y]
-    print(x, y)
-    if cell.fill == False:
-        cell._switch()
-        cell.draw()
+    for i in range(board_height//2):
+        x, y = randint(0, board_height - 2), randint(0, board_width - 2)
+        cell = grid.grid[x][y]
+        print(x, y)
+        if cell.fill == False:
+            cell._switch()
+            cell.draw()
 
 def clear():
     for i in range(board_height - 1):
@@ -42,29 +43,26 @@ def numOfNeighbors(x, y):
 
 
 def update():
-    temp = np.zeros([board_height - 1, board_width - 1])
+    to_toggle = []
     for i in range(board_height - 1):
         for j in range(board_width - 1):
             cell = grid.grid[i][j]
             #print("(" + str(i) + ", " + str(j) + "): " + str(numOfNeighbors(i, j)))
             n = numOfNeighbors(i, j)
-            if n < 2 or n > 3:
-                temp[i, j] = 0
-            elif n == 2 or n == 3 and cell.fill:
-                temp[i, j] = 1
-            elif n == 3 and not cell.fill:
-                temp[i, j]
-    for i in range(board_height - 1):
-        for j in range(board_width - 1):
-            cell = grid.grid[i][j]
-            if temp[i, j] == 0 and cell.fill:
-                cell._switch()
-                cell.draw()
-            elif temp[i, j] == 1 and not cell.fill:
-                cell._switch()
-                cell.draw()
-    print(temp)
+            if cell.fill == False and n == 3:
+                to_toggle.append((i, j))
+            elif cell.fill == True and n != 3 and n != 2:
+                to_toggle.append((i, j))
+    for coord in to_toggle:
+        cell = grid.grid[coord[0]][coord[1]]
+        cell._switch()
+        cell.draw()
 
+def chooseGate():
+    popup = popupGate(frame)
+    gui.wait_window(popup.top)
+    gate = popup.gate
+    print(gate)
 
 gui = Tk()
 gui.title = "Game of Life"
@@ -72,13 +70,15 @@ frame = Frame(gui)
 frame.pack(side = "bottom")
 RandomPopulate = Button(frame, text = "Populate", command = populate)
 RandomPopulate.grid(row = 0, column = 0, rowspan = 2, sticky = "W", padx = (0, 0))
-Next = Button(frame, text = "Next Generation", command = update)
+Logic = Button(frame, text = "Demonstrate Logic Gates", command = chooseGate)
+Logic.grid(row = 0, column = 5, rowspan = 2, sticky = "W")
+Next = Button(frame, text = "Next Generation", repeatdelay = 1, repeatinterval = 1, command = update)
 Next.grid(row = 0, column = 1, sticky = "W")
 Clear = Button(frame, text = "Clear Memory", command = clear)
 Clear.grid(row = 0, column = 100, sticky = "E")
 Exit = Button(frame, text = "Exit", command = lambda: gui.destroy())
 Exit.grid(row = 0, column = 101, sticky = "E")
-grid = CellGrid(gui, board_height, board_width, 20)
+grid = CellGrid(gui, board_height, board_width, 10)
 grid.pack()
 
 gui.mainloop()
