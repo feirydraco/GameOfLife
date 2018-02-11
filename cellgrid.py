@@ -20,14 +20,14 @@ class CellGrid(Canvas):
             for cell in row:
                 cell.draw()
 
-    def eventCoords(self, event):
+    def _eventCoords(self, event):
         row = int(event.y / self.cellSize)
         column = int(event.x / self.cellSize)
         return row, column
 
     def handleMouseClick(self, event):
-        row, column = self.eventCoords(event)
+        row, column = self._eventCoords(event)
         cell = self.grid[row][column]
-        cell.switch()
+        cell._switch()
         cell.draw()
         print(row, column)
