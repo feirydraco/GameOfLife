@@ -11,7 +11,7 @@ class Cell():
         self.size = size
         self.fill = False
 
-    def switch(self):
+    def _switch(self):
         self.fill = not self.fill
 
     def draw(self):
