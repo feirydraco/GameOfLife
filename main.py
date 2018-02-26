@@ -4,9 +4,16 @@ from tkinter import Tk, Frame, Button, Toplevel
 import tkinter.messagebox
 from random import randint
 from spawners import *
-
+import threading
+from queue import Queue
 board_height = 80
 board_width = 158
+
+def threader():
+    while True:
+        worker = q.get()
+        portscan(worker)
+        q.task_done
 
 def populate():
     for i in range(board_height//2):
@@ -41,21 +48,32 @@ def numOfNeighbors(x, y):
     return count
 
 
+def toToggle(i, j):
+    cell = grid.grid[i][j]
+    n = numOfNeighbors(i, j)
+    if cell.fill == False and n == 3:
+        return True
+    elif cell.fill == True and n != 3 and n != 2:
+        return True
+
+def updateCell(i, j):
+    cell = grid.grid[i][j]
+    if toToggle(i, j) == True:
+        return (i, j)
+
 def update():
-    to_toggle = []
+    toggle = []
     for i in range(board_height - 1):
         for j in range(board_width - 1):
-            cell = grid.grid[i][j]
-            #print("(" + str(i) + ", " + str(j) + "): " + str(numOfNeighbors(i, j)))
-            n = numOfNeighbors(i, j)
-            if cell.fill == False and n == 3:
-                to_toggle.append((i, j))
-            elif cell.fill == True and n != 3 and n != 2:
-                to_toggle.append((i, j))
-    for coord in to_toggle:
-        cell = grid.grid[coord[0]][coord[1]]
-        cell._switch()
-        cell.draw()
+            toggle.append(updateCell(i, j))
+    for coord in toggle:
+        try:
+            cell = grid.grid[coord[0]][coord[1]]
+            cell._switch()
+            cell.draw()
+        except TypeError:
+            pass
+    del toggle[::]
 
 def orPressed():
     Or.configure(state = "disabled")
@@ -75,6 +93,7 @@ def orPressed():
             else:
                 cell._switch()
                 cell.draw()
+    del toSpawn[::]
 def AndPressed():
     Or.configure(state = "disabled")
     Not.configure(state = "disabled")
@@ -92,6 +111,7 @@ def AndPressed():
             else:
                 cell._switch()
                 cell.draw()
+    del toSpawn[::]
 def NotPressed():
     Or.configure(state = "disabled")
     Not.configure(state = "disabled")
@@ -108,7 +128,8 @@ def NotPressed():
             else:
                 cell._switch()
                 cell.draw()
-
+    del toSpawn[::]
+    
 def enableButtons():
     Or.configure(state = "normal")
     Not.configure(state = "normal")
@@ -130,6 +151,7 @@ Or = Button(frame, text = "OR", command = orPressed)
 Or.grid(row = 1, column = 2)
 Not = Button(frame, text = "NOT", command = NotPressed)
 Not.grid(row = 1, column = 2, sticky = "W")
+# Next = Button(frame, text = "Next Generation", command = update)
 Next = Button(frame, text = "Next Generation", repeatdelay = 1, repeatinterval = 1, command = update)
 Next.grid(row = 0, column = 1)
 Clear = Button(frame, text = "Clear Memory", command = clear)
