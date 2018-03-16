@@ -10,11 +10,6 @@ from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAn
 board_height = 80
 board_width = 158
 
-def threader():
-    while True:
-        worker = q.get()
-        portscan(worker)
-        q.task_done
 
 def populate():
     for i in range(board_height//2):
