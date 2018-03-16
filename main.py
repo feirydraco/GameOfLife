@@ -3,7 +3,7 @@ from cellgrid import CellGrid
 from tkinter import Tk, Frame, Button, Toplevel
 import tkinter.messagebox
 from random import randint
-from spawners import *
+from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAnd, spawnEaterNot
 
 
 
