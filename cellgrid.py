@@ -1,6 +1,8 @@
 from cell import Cell
 from tkinter import Tk, Canvas
 from random import randint
+
+
 class CellGrid(Canvas):
     def __init__(self, master, rowNumber, columnNumber, cellSize):
         Canvas.__init__(self, master, width = cellSize * (columnNumber - 1), height = cellSize * (rowNumber - 1))

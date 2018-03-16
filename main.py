@@ -4,8 +4,9 @@ from tkinter import Tk, Frame, Button, Toplevel
 import tkinter.messagebox
 from random import randint
 from spawners import *
-import threading
-from queue import Queue
+
+
+
 board_height = 80
 board_width = 158
 
@@ -129,7 +130,7 @@ def NotPressed():
                 cell._switch()
                 cell.draw()
     del toSpawn[::]
-    
+
 def enableButtons():
     Or.configure(state = "normal")
     Not.configure(state = "normal")
