@@ -7,8 +7,10 @@ from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAn
 
 
 
-board_height = 80
-board_width = 158
+# board_height = 80
+# board_width = 158
+board_height = 50
+board_width = 100
 
 
 def populate():
