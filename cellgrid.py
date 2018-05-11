@@ -32,4 +32,4 @@ class CellGrid(Canvas):
         cell = self.grid[row][column]
         cell._switch()
         cell.draw()
-        #print(row, column)
+        print(row, column)

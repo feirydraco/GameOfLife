@@ -16,7 +16,7 @@ toSpawn.append(spawnGlider(1, 0))
 toSpawn.append(spawnReverseGlider(3, 40))
 toSpawn.append(spawnEaterNot())
 
-grid = np.zeros((80, 158)).reshape(80, 158)
+grid = np.zeros((40, 80)).reshape(40, 80)
 
 for listemt in toSpawn:
 	for emt in listemt:
@@ -36,25 +36,20 @@ def numOfNeighbors(x, y):
 	return total
 
 def update(data):
-	global grid
-	# copy grid since we require 8 neighbors for calculation
-	# and we go line by line
-	newGrid = grid.copy()
-	for i in range(80):
-		for j in range(158):
-			total = numOfNeighbors(i, j)
-	  # total = (grid[i, (j - 1) % 158] + grid[i, (j + 1) % 158] + grid[(i - 1) % 80, j] + grid[(i + 1) % 80, j] + grid[(i - 1) % 80, (j - 1) % 158] + grid[(i - 1) % 80, (j + 1) % 158] + grid[(i + 1) % 80, (j - 1) % 158] + grid[(i + 1) % 80, (j + 1) % 158]) / 255
-
-	if grid[i, j] == ON:
-		if (total < 2) or (total > 3):
-			newGrid[i, j] = OFF
-	else:
-		if total == 3:
-			newGrid[i, j] = ON
-  # update data
-	mat.set_data(newGrid)
-	grid = newGrid
-	return [mat]
+    global grid
+    newGrid = grid.copy()
+    for i in range(40):
+        for j in range(80):
+            total = numOfNeighbors(i, j)
+            if grid[i, j] == ON:
+                if (total < 2) or (total > 3):
+                    newGrid[i, j] = OFF
+            else:
+                if total == 3:
+                    newGrid[i, j] = ON
+    mat.set_data(newGrid)
+    grid = newGrid
+    return [mat]
 
 # set up animation
 fig, ax = plt.subplots()
