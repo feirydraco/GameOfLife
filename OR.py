@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAnd, spawnEaterNot
+from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAnd, spawnEaterNot, spawnStopperOr
 
 # N = 50
 ON = 255
@@ -16,6 +16,7 @@ toSpawn.append(spawnGlider(1, 0))
 toSpawn.append(spawnGlider(1, 40))
 toSpawn.append(spawnGlider(1, 80))
 toSpawn.append(spawnReverseGlider(3, 120))
+toSpawn.append(spawnStopperOr())
 toSpawn.append(spawnEaterOr())
 
 grid = np.zeros((80, 158)).reshape(80, 158)
