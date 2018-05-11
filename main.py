@@ -6,7 +6,6 @@ from random import randint
 from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAnd, spawnEaterNot
 
 
-
 board_height = 80
 board_width = 158
 #board_height = 50
@@ -77,56 +76,59 @@ def orPressed():
     Or.configure(state = "disabled")
     Not.configure(state = "disabled")
     And.configure(state = "disabled")
-    toSpawn = []
-    toSpawn.append(spawnGlider(1, 0))
-    toSpawn.append(spawnGlider(1, 40))
-    toSpawn.append(spawnGlider(1, 80))
-    toSpawn.append(spawnReverseGlider(3, 120))
-    toSpawn.append(spawnEaterOr())
-    for listemt in toSpawn:
-        for emt in listemt:
-            cell = grid.grid[emt[0]][emt[1]]
-            if cell.fill == True:
-                pass
-            else:
-                cell._switch()
-                cell.draw()
-    del toSpawn[::]
+    # toSpawn = []
+    # toSpawn.append(spawnGlider(1, 0))
+    # toSpawn.append(spawnGlider(1, 40))
+    # toSpawn.append(spawnGlider(1, 80))
+    # toSpawn.append(spawnReverseGlider(3, 120))
+    # toSpawn.append(spawnEaterOr())
+    # for listemt in toSpawn:
+    #     for emt in listemt:
+    #         cell = grid.grid[emt[0]][emt[1]]
+    #         if cell.fill == True:
+    #             pass
+    #         else:
+    #             cell._switch()
+    #             cell.draw()
+    # del toSpawn[::]
+    import OR
 def AndPressed():
     Or.configure(state = "disabled")
     Not.configure(state = "disabled")
     And.configure(state = "disabled")
-    toSpawn = []
-    toSpawn.append(spawnGlider(1, 0))
-    toSpawn.append(spawnGlider(0, 40))
-    toSpawn.append(spawnReverseGlider(3, 90))
-    toSpawn.append(spawnEaterOr())
-    for listemt in toSpawn:
-        for emt in listemt:
-            cell = grid.grid[emt[0]][emt[1]]
-            if cell.fill == True:
-                pass
-            else:
-                cell._switch()
-                cell.draw()
-    del toSpawn[::]
+    # toSpawn = []
+    # toSpawn.append(spawnGlider(1, 0))
+    # toSpawn.append(spawnGlider(0, 40))
+    # toSpawn.append(spawnReverseGlider(3, 90))
+    # toSpawn.append(spawnEaterOr())
+    # for listemt in toSpawn:
+    #     for emt in listemt:
+    #         cell = grid.grid[emt[0]][emt[1]]
+    #         if cell.fill == True:
+    #             pass
+    #         else:
+    #             cell._switch()
+    #             cell.draw()
+    # del toSpawn[::]
+    import AND
 def NotPressed():
     Or.configure(state = "disabled")
     Not.configure(state = "disabled")
     And.configure(state = "disabled")
-    toSpawn = []
-    toSpawn.append(spawnGlider(1, 0))
-    toSpawn.append(spawnReverseGlider(3, 40))
-    toSpawn.append(spawnEaterNot())
-    for listemt in toSpawn:
-        for emt in listemt:
-            cell = grid.grid[emt[0]][emt[1]]
-            if cell.fill == True:
-                pass
-            else:
-                cell._switch()
-                cell.draw()
-    del toSpawn[::]
+    # toSpawn = []
+    # toSpawn.append(spawnGlider(1, 0))
+    # toSpawn.append(spawnReverseGlider(3, 40))
+    # toSpawn.append(spawnEaterNot())
+    # for listemt in toSpawn:
+    #     for emt in listemt:
+    #         cell = grid.grid[emt[0]][emt[1]]
+    #         if cell.fill == True:
+    #             pass
+    #         else:
+    #             cell._switch()
+    #             cell.draw()
+    # del toSpawn[::]
+    import NOT
 
 def enableButtons():
     Or.configure(state = "normal")
