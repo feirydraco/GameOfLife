@@ -55,7 +55,8 @@ def update(data):
     return [mat]
 
 # set up animation
-fig, ax = plt.subplots()
-mat = ax.matshow(grid)
-ani = animation.FuncAnimation(fig, update, interval = 1, save_count = 5)
-plt.show()
+if __name__ == '__main__':
+	fig, ax = plt.subplots()
+	mat = ax.matshow(grid)
+	ani = animation.FuncAnimation(fig, update, interval = 1, save_count = 5)
+	plt.show()
