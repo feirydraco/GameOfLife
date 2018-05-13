@@ -1,16 +1,30 @@
 class GOL:
     def __init__(self, data):
-        self.board_height = 20
-        self.board_width = len(data)
+        self.board_height = None
+        self.board_width = None
         self.board = []
         self.temp_board = []
         self.data = data
         self.n = 0
         for char in self.data:
             self.n += ord(char)
+        self.get_dimensions()
+        self.final = []
+    def get_dimensions(self):
+        temp = self.convertGOL()
+        self.board_height = len(temp)
+        self.board_width = len(str(temp[0]))
     def board_init(self, board):
         for i in range(self.board_height + 1):
             board.append([0] * (self.board_width + 1))
+    def putdata(self):
+        compute_data = self.convertGOL()
+        print(compute_data)
+        for emt in compute_data:
+            temp = []
+            for x in str(emt):
+                temp.append(int(x))
+            self.board.append(temp)
     def print_board_beta(self):
         for i in range(self.board_height):
             for j in range(self.board_width):
@@ -39,12 +53,10 @@ class GOL:
                 elif self.nbrs(i, j) == 3 and self.board[i][j] == 0:
                     self.temp_board[i][j] = 1
     def compute(self):
-        self.board_init(self.board)
+        #self.print_board_beta()
+        self.putdata()
         self.print_board_beta()
-
         print ("\n\n")
-
-
 
         for i in range(self.n):
             print (("Generation"), i + 1)
@@ -55,5 +67,26 @@ class GOL:
             self.temp_board = self.board
             self.board_init(self.temp_board)
             print ("\n")
+        for i in range(self.board_height):
+            temp = []
+            for j in range(self.board_width):
+                temp.append(self.board[i][j])
+            self.final.append(temp)
+        self.returnkey()
+    def convertGOL(self):
+        b_a = []
+
+        for _ in self.data:
+            b_a.append(bin(ord(_)))
+
+        actual_data = []
+
+        for _ in b_a:
+            actual_data.append(int(_[2:]))
+
+        return actual_data
+    def returnkey(self):
+        print(self.final)
+
 g = GOL("hi")
 g.compute()
