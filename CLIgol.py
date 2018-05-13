@@ -72,7 +72,7 @@ class GOL:
             for j in range(self.board_width):
                 temp.append(str(self.board[i][j]))
             self.final.append(temp)
-        return self.final
+        return self.returnkey()
     def convertGOL(self):
         b_a = []
 
@@ -85,12 +85,13 @@ class GOL:
             actual_data.append(int(_[2:]))
 
         return actual_data
-#    def returnkey(self):
-##        for emt in self.final:
-##            emt = "0b" + "".join(emt)
-##            print(emt)
-#        return self.final
+    def returnkey(self):
+        temp = []
+        for emt in self.final:
+            temp.append(chr(int("".join(emt), 2)))
+        print(temp)
+        return temp
 
-g = GOL("hi")
+g = GOL("hello")
 container = g.compute()
 
