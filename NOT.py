@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
-from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAnd, spawnEaterNot
+from spawners import *
+import sys
 
 # N = 50
 ON = 255
@@ -11,16 +12,6 @@ vals = [ON, OFF]
 # populate grid with random on/off - more off than on
 #grid = np.random.choice(vals, 80 * 158, p=[0.2, 0.8]).reshape(80, 158)
 
-toSpawn = []
-toSpawn.append(spawnGlider(1, 0))
-toSpawn.append(spawnReverseGlider(3, 40))
-toSpawn.append(spawnEaterNot())
-
-grid = np.zeros((40, 80)).reshape(40, 80)
-
-for listemt in toSpawn:
-	for emt in listemt:
-		grid[emt[0], emt[1]] = ON
 
 def numOfNeighbors(x, y):
 	total = 0
@@ -53,6 +44,20 @@ def update(data):
 
 # set up animation
 if __name__ == '__main__':
+	toSpawn = []
+	toSpawn.append(spawnGlider(1, 0))
+	toSpawn.append(spawnReverseGlider(3, 40))
+	toSpawn.append(spawnEaterNot())
+
+	if int(sys.argv[1]) == 0:
+		toSpawn.append(spawnStopperNot())
+
+	grid = np.zeros((40, 80)).reshape(40, 80)
+
+	for listemt in toSpawn:
+		for emt in listemt:
+			grid[emt[0], emt[1]] = ON
+
 	fig, ax = plt.subplots()
 	mat = ax.matshow(grid)
 	ani = animation.FuncAnimation(fig, update, interval = 1, save_count = 5)

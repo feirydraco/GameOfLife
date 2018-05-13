@@ -84,7 +84,7 @@ def showSimulation(x):
             os.system("python AND.py 1 0")
         elif y == 3:
             os.system("python AND.py 1 1")
-        elif y == 41:
+        elif y == 4:
             os.system("python OR.py 0 0")
         elif y == 5:
             os.system("python OR.py 0 1")
