@@ -36,3 +36,16 @@ def spawnEaterNot():
 def spawnStopperOr():
     toSpawn = [[58, 111], [59, 111], [58, 112], [60, 112], [60, 113], [60, 114], [61, 114]]
     return toSpawn
+
+def stopperAnd01():
+    toSpawn = [[15, 28], [16, 28], [15, 29], [17, 29], [17, 30], [17, 31], [18, 31]]
+    return toSpawn
+def stopperAnd10():
+    toSpawn = [[14, 68], [15, 68], [14, 69], [16, 69], [16, 70], [16, 71], [17, 71]]
+    return toSpawn
+def stopperAnd00():
+    toSpawn = [[14, 68], [15, 68], [14, 69], [16, 69], [16, 70], [16, 71], [17, 71], [15, 28], [16, 28], [15, 29], [17, 29], [17, 30], [17, 31], [18, 31]]
+    return toSpawn
+def spawnStopperAnd():
+    toSpawn = [[56, 55], [56, 56], [57, 56], [58, 55], [58, 54], [58, 53], [59, 53]]
+    return toSpawn

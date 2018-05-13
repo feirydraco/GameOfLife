@@ -3,11 +3,11 @@ from cellgrid import CellGrid
 from tkinter import Tk, Frame, Button, Toplevel, ttk, Listbox
 import tkinter.messagebox
 from random import randint
-from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAnd, spawnEaterNot
+from spawners import *
 import AND, OR, NOT, os
 
-board_height = 80
-board_width = 158
+board_height = 30
+board_width = 30
 #board_height = 50
 #board_width = 100
 
@@ -72,14 +72,34 @@ def update():
             pass
     del toggle[::]
 
+def showSimulation(x):
+        #x[0]
+        y = int(x[0])
 
-    
-def popupmsg(msg):   
-    def showSimulation(x):
-        print(x)
-        for i in x:
-            print(listbox.get(i))
-            
+        if y == 0:
+            os.system("python AND.py 0 0")
+        elif y == 1:
+            os.system("python AND.py 0 1")
+        elif y == 2:
+            os.system("python AND.py 1 0")
+        elif y == 3:
+            os.system("python AND.py 1 1")
+        elif y == 41:
+            os.system("python OR.py 0 0")
+        elif y == 5:
+            os.system("python OR.py 0 1")
+        elif y == 6:
+            os.system("python OR.py 1 0")
+        elif y == 7:
+            os.system("python OR.py 1 1")
+        elif y == 8:
+            os.system("python NOT.py 0 ")
+        elif y == 9:
+            os.system("python NOT.py 1")
+
+
+
+def popupmsg():
     popup = Tk()
     popup.wm_title("!")
     listbox = Listbox(popup)
@@ -95,14 +115,14 @@ def popupmsg(msg):
     listbox.insert(8, "OR 1-1")
     listbox.insert(9, "NOT 0")
     listbox.insert(10, "NOT 1")
-    
 
-    B1 =  ttk.Button(popup, text = "Simulate", command = showSimulation(listbox.curselection()))
+
+    B1 =  ttk.Button(popup, text = "Simulate", command = lambda: showSimulation(listbox.curselection()))
     B1.pack()
-    
+
     B2 = ttk.Button(popup, text = "Exit", command = popup.destroy)
     B2.pack()
-    
+
     popup.mainloop()
 
 # def orPressed():
@@ -179,7 +199,7 @@ frame = Frame(gui)
 frame.pack(side = "bottom")
 RandomPopulate = Button(frame, text = "Populate", command = populate)
 RandomPopulate.grid(row = 0, column = 0)
-Logic = Button(frame, text = "Demonstrate Logic Gates", command = lambda: popupmsg("Hello"))
+Logic = Button(frame, text = "Demonstrate Logic Gates", command = lambda: popupmsg())
 Logic.grid(row = 0, column = 2)
 # And = Button(frame, text = "AND", command = AndPressed  )
 # And.grid(row = 1, column = 2, sticky = "E")

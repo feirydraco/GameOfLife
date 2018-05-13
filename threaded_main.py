@@ -9,15 +9,15 @@ from spawners import spawnGlider, spawnReverseGlider, spawnEaterOr, spawnEaterAn
 
 # board_height = 80
 # board_width = 158
-board_height = 50
-board_width = 100
+board_height = 80
+board_width = 158
 max_threads = board_height * board_width
 
 def populate():
     for i in range(board_height//2):
         x, y = randint(0, board_height - 2), randint(0, board_width - 2)
         cell = grid.grid[x][y]
-        # print(x, y)
+        print(x, y)
         if cell.fill == False:
             cell._switch()
             cell.draw()
@@ -46,42 +46,47 @@ def numOfNeighbors(x, y):
     return count
 
 
-# def toToggle(i, j):
-#     cell = grid.grid[i][j]
-#     n = numOfNeighbors(i, j)
-#     if cell.fill == False and n == 3:
-#         return True
-#     elif cell.fill == True and n != 3 and n != 2:
-#         return True
+def toToggle(i, j):
+    cell = grid.grid[i][j]
+    n = numOfNeighbors(i, j)
+    if cell.fill == False and n == 3:
+        return True
+    elif cell.fill == True and n != 3 and n != 2:
+        return True
 
-# def updateCell(i, j):
-#     cell = grid.grid[i][j]
-#     if toToggle(i, j) == True:
-#         return (i, j)
+def updateCell(i, j):
+    cell = grid.grid[i][j]
+    if toToggle(i, j) == True:
+        return (i, j)
 
-def update(x, y):
-    # for coord in toggle:
+def update():
+    toggle = []
+    for i in range(board_height - 1):
+        for j in range(board_width - 1):
+            toggle.append(updateCell(i, j))
+    for coord in toggle:
+        try:
+            cell = grid.grid[coord[0]][coord[1]]
+            cell._switch()
+            cell.draw()
+        except TypeError:
+            pass
+    del toggle[::]
+    #         pass
+    # cell = grid.grid[x][y]
+    # n = numOfNeighbors(x, y)
+    # if cell.fill == False and n == 3:
     #     try:
-    #         cell = grid.grid[coord[0]][coord[1]]
     #         cell._switch()
     #         cell.draw()
     #     except TypeError:
     #         pass
-    # del toggle[::]
-    cell = grid.grid[x][y]
-    n = numOfNeighbors(x, y)
-    if cell.fill == False and n == 3:
-        try:
-            cell._switch()
-            cell.draw()
-        except TypeError:
-            pass
-    elif cell.fill == True and n != 3 and n != 2:
-        try:
-            cell._switch()
-            cell.draw()
-        except TypeError:
-            pass
+    # elif cell.fill == True and n != 3 and n != 2:
+    #     try:
+    #         cell._switch()
+    #         cell.draw()
+    #     except TypeError:
+    #         pass
 
 
 
@@ -145,23 +150,7 @@ def enableButtons():
     Not.configure(state = "normal")
     And.configure(state = "normal")
     clear()
-def start():
-    pass
-def process():
-    for emt in threads:
-        emt.start()
-#
-def calculate():
-    print(5 ** 5, sep = " ")
-#
-def start():
-    if PlayPause["text"] == "Play":
-        PlayPause["text"] = "Pause"
-        print("hi")
 
-
-    else:
-        PlayPause["text"] = "Play"
 if __name__ == '__main__':
     threads = []
     for x in range(board_height):
@@ -181,11 +170,9 @@ if __name__ == '__main__':
     Or.grid(row = 1, column = 2)
     Not = Button(frame, text = "NOT", command = NotPressed)
     Not.grid(row = 1, column = 2, sticky = "W")
-    # Next = Button(frame, text = "Next Generation", command = update)
-    Next = Button(frame, text = "Next Generation", repeatdelay = 1, repeatinterval = 1, command = process)
+    Next = Button(frame, text = "Next Generation", command = update)
+    # Next = Button(frame, text = "Next Generation", repeatdelay = 1, repeatinterval = 1, command = process)
     Next.grid(row = 0, column = 1)
-    PlayPause = Button(frame, text = "Play", command = start)
-    PlayPause.grid(row = 0, column = 3)
     Clear = Button(frame, text = "Clear Memory", command = clear)
     Clear.grid(row = 0, column = 4)
     Exit = Button(frame, text = "Exit", command = lambda: gui.destroy())
