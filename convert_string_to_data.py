@@ -15,7 +15,3 @@ actual_data = []
 
 for _ in b_a:
     actual_data.append(int(_[2:]))
-
-
-
-
