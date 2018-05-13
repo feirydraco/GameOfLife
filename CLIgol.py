@@ -90,7 +90,7 @@ class GOL:
         for emt in self.final:
             temp.append(chr(int("".join(emt), 2)))
         print(temp)
-        return temp
+        return "".join(temp)
 
 g = GOL("hello")
 container = g.compute()
