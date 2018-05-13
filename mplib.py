@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
-N = 255
+N = 60
 ON = 255
 OFF = 0
 vals = [ON, OFF]
