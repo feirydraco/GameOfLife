@@ -104,6 +104,7 @@ class Blockchain:
         transactions to the blockchain by adding them to the block
         and figuring out Proof Of Work.
         """
+
         if not self.unconfirmed_transactions:
             return False
 
@@ -112,7 +113,7 @@ class Blockchain:
         new_block = Block(index=last_block.index + 1,
                           transactions=self.unconfirmed_transactions,
                           timestamp=time.time(),
-                          previous_hash=last_block.hash)
+                          previous_hash = last_block.hash)
 
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
