@@ -4,7 +4,7 @@ class GOL:
         self.board_width = None
         self.board = []
         self.temp_board = []
-        self.data = data
+        self.data = str(data)
         self.n = 0
         for char in self.data:
             self.n += ord(char)
@@ -90,10 +90,9 @@ class GOL:
         for emt in self.final:
             temp.append(chr(int("".join(emt), 2)))
         print(temp)
-        return "".join(temp)
+        return temp
 
 
 if __name__ == "__main__":
     g = GOL("hello")
     container = g.compute()
-

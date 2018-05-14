@@ -1,30 +1,32 @@
+from random import randint
+
+
 class GOL:
-    def __init__(self, data):
-        self.board_height = None
-        self.board_width = None
+    def __init__(self, ):
+        self.board_height = 60
+        self.board_width = 60
+        self.num = 0.4*self.board_width*self.board_height
         self.board = []
         self.temp_board = []
-        self.data = data
-        self.n = 0
-        for char in self.data:
-            self.n += ord(char)
-        self.get_dimensions()
+
+
         self.final = []
-    def get_dimensions(self):
-        temp = self.convertGOL()
-        self.board_height = len(temp)
-        self.board_width = len(str(temp[0]))
+
+
+
+
     def board_init(self, board):
         for i in range(self.board_height + 1):
             board.append([0] * (self.board_width + 1))
+
     def putdata(self):
-        compute_data = self.convertGOL()
-        print(compute_data)
-        for emt in compute_data:
+
+        for emt in range(0,self.board_height):
             temp = []
-            for x in str(emt):
-                temp.append(int(x))
+            for x in range(0,self.board_width):
+                temp.append(randint(0,1))
             self.board.append(temp)
+
     def print_board_beta(self):
         for i in range(self.board_height):
             for j in range(self.board_width):
@@ -73,16 +75,8 @@ class GOL:
                 temp.append(str(self.board[i][j]))
             self.final.append(temp)
         return self.returnkey()
-    def convertGOL(self):
-        b_a = []
 
-        for _ in self.data:
-            b_a.append(bin(ord(_)))
 
-        actual_data = []
-
-        for _ in b_a:
-            actual_data.append(int(_[2:]))
 
         return actual_data
     def returnkey(self):
