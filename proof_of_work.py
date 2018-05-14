@@ -1,7 +1,7 @@
 from random import randint
 
 
-class GOL:
+class GOLL:
     def __init__(self, ):
         self.board_height = 60
         self.board_width = 60
