@@ -31,7 +31,7 @@ def update(data):
           newGrid[i, j] = ON
   # update data
   if np.array_equal(newGrid, grid) is True:
-      print("Successfully computed.")
+      print("Successful proof of work.")
       sys.exit()
 
   mat.set_data(newGrid)
