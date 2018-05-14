@@ -55,18 +55,16 @@ class GOL:
     def compute(self):
         #self.print_board_beta()
         self.putdata()
-        self.print_board_beta()
+        # self.print_board_beta()
         print ("\n\n")
 
         for i in range(self.n):
-            print (("Generation"), i + 1)
-            print ("\n")
+            print (("Currently at generation"), i + 1)
             self.play()
-            self.print_board_beta()
+            # self.print_board_beta()
             self.board_init(self.board)
             self.temp_board = self.board
-            self.board_init(self.temp_board)
-            print ("\n")
+            # self.board_init(self.temp_board)
         for i in range(self.board_height):
             temp = []
             for j in range(self.board_width):
@@ -94,6 +92,5 @@ class GOL:
 
 
 if __name__ == "__main__":
-    g = GOL("hello")
+    g = GOL("message")
     container = g.compute()
-
