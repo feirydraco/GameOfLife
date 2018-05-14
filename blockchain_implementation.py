@@ -1,6 +1,4 @@
-from hash_function import  *
-from mplib import *
-
+from hashlib import sha256
 import json
 import time
 
@@ -21,13 +19,9 @@ class Block:
         """
         A function that return the hash of the block contents.
         """
-        pre_h = ""
-        for ph in self.previous_hash:
-            pre_h += ph
 
-        block_string = str(self.index)+str(pre_h)+str(self.transactions)+str(self.timestamp)
-        gobj = GOL(block_string)
-        self.hash = gobj.compute()
+        block_string = json.dumps(self.__dict__, sort_keys=True)
+        self.hash = sha256(block_string.encode()).hexdigest()
         return self.hash
 
 
@@ -105,7 +99,6 @@ class Blockchain:
         transactions to the blockchain by adding them to the block
         and figuring out Proof Of Work.
         """
-
         if not self.unconfirmed_transactions:
             return False
 
@@ -114,7 +107,7 @@ class Blockchain:
         new_block = Block(index=last_block.index + 1,
                           transactions=self.unconfirmed_transactions,
                           timestamp=time.time(),
-                          previous_hash = last_block.hash)
+                          previous_hash=last_block.hash)
 
         proof = self.proof_of_work(new_block)
         self.add_block(new_block, proof)
@@ -241,7 +234,6 @@ def consensus():
 
 
 def announce_new_block(block):
-
     """
     A function to announce to the network once a block has been mined.
     Other blocks can simply verify the proof of work and add it to their

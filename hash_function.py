@@ -89,7 +89,6 @@ class GOL:
         temp = []
         for emt in self.final:
             temp.append(chr(int("".join(emt), 2)))
-        print(temp)
         return temp
 
 
