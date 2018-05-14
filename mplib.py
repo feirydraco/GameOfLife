@@ -1,8 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import sys
 
-N = 60
+N = 15
 ON = 255
 OFF = 0
 vals = [ON, OFF]
@@ -29,6 +30,11 @@ def update(data):
         if total == 3:
           newGrid[i, j] = ON
   # update data
+  if np.array_equal(newGrid, grid) is True:
+      print("Successfully computed.")
+      return True
+      exit
+
   mat.set_data(newGrid)
   grid = newGrid
   return [mat]
