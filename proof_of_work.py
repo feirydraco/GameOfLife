@@ -90,4 +90,3 @@ class GOLL:
 if __name__ == "__main__":
     g = GOL("hello")
     container = g.compute()
-
