@@ -83,7 +83,6 @@ class GOL:
 
         for _ in b_a:
             actual_data.append(int(_[2:]))
-
         return actual_data
     def returnkey(self):
         temp = []
@@ -93,5 +92,12 @@ class GOL:
 
 
 if __name__ == "__main__":
-    g = GOL("hello")
+    g = GOL("test")
     container = g.compute()
+    h = GOL("test")
+    eval = h.compute()
+    print(container, eval)
+    if container == eval:
+        print("Success")
+    else:
+        print("Invalid Key")
